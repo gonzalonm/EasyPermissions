@@ -30,7 +30,7 @@ You can use the annotations to register the permissions in your activity class. 
 @RegisterPermission(permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})
 ```
 
-The property **permissions** can be contain an array of permissions or a simple permission string.
+The property **permissions** can contain an array of permissions or a simple permission string.
 
 Then, you need to extend of _EasyPermissionActivity_
 
