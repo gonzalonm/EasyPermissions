@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by Gonzalo.Martin on 12/20/2016
+ * This annotation stores the provided permissions for use when the flow needs them
+ * {@link #permissions} List of permissions to check
  */
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface RegisterPermission {

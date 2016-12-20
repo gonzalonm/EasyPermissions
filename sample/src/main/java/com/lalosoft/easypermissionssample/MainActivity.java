@@ -7,7 +7,7 @@ import android.widget.Toast;
 import com.lalosoft.easypermission.EasyPermissionActivity;
 import com.lalosoft.easypermission.RegisterPermission;
 
-@RegisterPermission(permissions = Manifest.permission.WRITE_EXTERNAL_STORAGE)
+@RegisterPermission(permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})
 public class MainActivity extends EasyPermissionActivity {
 
     @Override
@@ -17,12 +17,12 @@ public class MainActivity extends EasyPermissionActivity {
     }
 
     @Override
-    public void onRequestPermissionGranted(String[] permission) {
+    public void onRequestPermissionGranted(String[] permission, int[] grantResults) {
         Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onRequestPermissionDenied(String[] permission) {
+    public void onRequestPermissionDenied(String[] permission, int[] grantResults) {
         Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
     }
 }

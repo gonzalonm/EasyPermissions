@@ -1,6 +1,7 @@
 package com.lalosoft.easypermission;
 
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,8 +24,12 @@ public abstract class EasyPermissionActivity extends AppCompatActivity implement
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callback = this;
-        getPermissions();
+
+        // check permissions in runtime from Android M (API Level 23)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            callback = this;
+            checkPermissions();
+        }
     }
 
     @Override
@@ -33,17 +38,28 @@ public abstract class EasyPermissionActivity extends AppCompatActivity implement
             // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // permission was granted
-                callback.onRequestPermissionGranted(permissions);
+                callback.onRequestPermissionGranted(permissions, grantResults);
             } else {
                 // permission denied
-                callback.onRequestPermissionDenied(permissions);
+                callback.onRequestPermissionDenied(permissions, grantResults);
             }
         }
     }
 
-    private void getPermissions() {
+    @Override
+    public void onRequestPermissionGranted(String[] permission, int[] grantResults) {
+        // This method can be implemented by subclasses
+    }
+
+    @Override
+    public void onRequestPermissionDenied(String[] permission, int[] grantResults) {
+        // This method can be implemented by subclasses
+    }
+
+    private void checkPermissions() {
         RegisterPermission registerPermission = this.getClass().getAnnotation(RegisterPermission.class);
         if (registerPermission != null) {
+            // get current permissions
             String[] permissions = registerPermission.permissions();
 
             // request permissions
