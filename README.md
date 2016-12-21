@@ -8,7 +8,7 @@ This Android library is very simple to use and very helpful. You can register a 
 
 Add the following lines on your module's build.gradle file
 ```gradle
-compile 'lalosoft.android-utilities:easypermissions:1.0.0'
+compile 'lalosoft.android-utilities:easypermissions:1.0.1'
 ```
 
 
@@ -17,7 +17,7 @@ compile 'lalosoft.android-utilities:easypermissions:1.0.0'
 <dependency>
   <groupId>lalosoft.android-utilities</groupId>
   <artifactId>easypermissions</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ```
