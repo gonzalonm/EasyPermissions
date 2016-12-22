@@ -1,6 +1,9 @@
 #EasyPermissions
 
+Android 6.0 introduces the [Request permissions in runtime feature](https://developer.android.com/training/permissions/requesting.html). 
+
 This Android library is very simple to use and very helpful. You can register a number of permissions you want to check in runtime.
+Anyways, **you must define the uses permission in the Android Manifest file.**
 
 ##Installation
 
@@ -23,6 +26,7 @@ compile 'lalosoft.android-utilities:easypermissions:1.0.1'
 ```
 
 ##Usage
+
 
 You can use the annotations to register the permissions in your activity class. Add the following line above your activity class declaration
 
