@@ -1,5 +1,7 @@
 #EasyPermissions
 
+[![CircleCI](https://circleci.com/gh/lalosoft/EasyPermissions/tree/master.svg?style=shield)](https://circleci.com/gh/lalosoft/EasyPermissions/tree/master)
+
 Android 6.0 introduces the [Request permissions in runtime feature](https://developer.android.com/training/permissions/requesting.html). 
 
 This Android library is very simple to use and very helpful. You can register a number of permissions you want to check in runtime.
