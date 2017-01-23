@@ -44,6 +44,13 @@ Then, you need to extend of _EasyPermissionActivity_
 public class MainActivity extends EasyPermissionActivity {
 ```
 
+Also, you can ask for particular permission in everywhere, calling to this method (passing the list of permissions and the callback for granted or denied actions):
+
+```java
+askPermission(new String[]{Manifest.permission.CAMERA}, new EasyPermissionCallback() {
+...
+```
+
 And that's it!! Very very simple to use!
 
 ##Optional
