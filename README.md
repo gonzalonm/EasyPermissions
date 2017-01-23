@@ -13,7 +13,7 @@ Anyways, **you must define the uses permission in the Android Manifest file.**
 
 Add the following lines on your module's build.gradle file
 ```gradle
-compile 'lalosoft.android-utilities:easypermissions:1.0.1'
+compile 'lalosoft.android-utilities:easypermissions:1.0.2'
 ```
 
 
@@ -22,7 +22,7 @@ compile 'lalosoft.android-utilities:easypermissions:1.0.1'
 <dependency>
   <groupId>lalosoft.android-utilities</groupId>
   <artifactId>easypermissions</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ```
