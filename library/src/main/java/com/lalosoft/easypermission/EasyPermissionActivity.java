@@ -19,16 +19,20 @@ import java.util.List;
 public abstract class EasyPermissionActivity extends AppCompatActivity implements EasyPermissionCallback {
 
     private static final int MY_PERMISSIONS_REQUEST = 1;
+
     private EasyPermissionCallback callback;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        callback = this;
         // check permissions in runtime from Android M (API Level 23)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            callback = this;
-            checkPermissions();
+        if (isCorrectApiLevel()) {
+            checkClassPermissions();
+        } else {
+            // grant permission
+            callback.onRequestPermissionGranted(getClassPermissions());
         }
     }
 
@@ -38,35 +42,47 @@ public abstract class EasyPermissionActivity extends AppCompatActivity implement
             // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // permission was granted
-                callback.onRequestPermissionGranted(permissions, grantResults);
+                callback.onRequestPermissionGranted(permissions);
             } else {
                 // permission denied
-                callback.onRequestPermissionDenied(permissions, grantResults);
+                callback.onRequestPermissionDenied(permissions);
             }
         }
     }
 
     @Override
-    public void onRequestPermissionGranted(String[] permission, int[] grantResults) {
+    public void onRequestPermissionGranted(String[] permission) {
         // This method can be implemented by subclasses
     }
 
     @Override
-    public void onRequestPermissionDenied(String[] permission, int[] grantResults) {
+    public void onRequestPermissionDenied(String[] permission) {
         // This method can be implemented by subclasses
     }
 
-    private void checkPermissions() {
-        RegisterPermission registerPermission = this.getClass().getAnnotation(RegisterPermission.class);
-        if (registerPermission != null) {
-            // get current permissions
-            String[] permissions = registerPermission.permissions();
+    public void askPermission(String[] permissions, EasyPermissionCallback callback) {
+        this.callback = callback;
+        if (isCorrectApiLevel()) {
+            askForPermissions(permissions);
+        } else {
+            // grant the permission
+            callback.onRequestPermissionGranted(permissions);
+        }
+    }
 
-            // request permissions
-            List<String> deniedPermissions = getDeniedPermissions(permissions);
-            if (!deniedPermissions.isEmpty()) {
-                ActivityCompat.requestPermissions(this, deniedPermissions.toArray(new String[deniedPermissions.size()]), MY_PERMISSIONS_REQUEST);
-            }
+    private void checkClassPermissions() {
+        // get current permissions
+        String[] classPermissions = getClassPermissions();
+        if (classPermissions != null) {
+            askForPermissions(classPermissions);
+        }
+    }
+
+    private void askForPermissions(String[] permissions) {
+        // request permissions
+        List<String> deniedPermissions = getDeniedPermissions(permissions);
+        if (!deniedPermissions.isEmpty()) {
+            ActivityCompat.requestPermissions(this, deniedPermissions.toArray(new String[deniedPermissions.size()]), MY_PERMISSIONS_REQUEST);
         }
     }
 
@@ -82,5 +98,17 @@ public abstract class EasyPermissionActivity extends AppCompatActivity implement
 
     private boolean isGrantedPermission(String permission) {
         return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean isCorrectApiLevel() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    }
+
+    private String[] getClassPermissions() {
+        RegisterPermission registerPermission = this.getClass().getAnnotation(RegisterPermission.class);
+        if (registerPermission != null) {
+            return registerPermission.permissions();
+        }
+        return null;
     }
 }

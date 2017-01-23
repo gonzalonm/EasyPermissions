@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * {@link #permissions} List of permissions to check
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE})
 public @interface RegisterPermission {
     String[] permissions();
 }

@@ -5,8 +5,8 @@ package com.lalosoft.easypermission;
  */
 public interface EasyPermissionCallback {
 
-    void onRequestPermissionGranted(String[] permission, int[] grantResults);
+    void onRequestPermissionGranted(String[] permission);
 
-    void onRequestPermissionDenied(String[] permission, int[] grantResults);
+    void onRequestPermissionDenied(String[] permission);
 
 }
